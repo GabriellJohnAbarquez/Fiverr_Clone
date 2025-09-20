@@ -11,6 +11,11 @@ class Database {
     private $pass = '';
     private $charset = 'utf8mb4';
 
+    public function getPDO() {
+    return $this->pdo;
+    }
+
+
     /**
      * Constructor establishes the PDO connection.
      */

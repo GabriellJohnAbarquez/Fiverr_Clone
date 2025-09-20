@@ -1,20 +1,13 @@
 <?php 
-require_once 'classloader.php'; 
+require_once 'classloader.php';
 
-// Check if user is logged in
-if (!$userObj->isLoggedIn()) {
-  header("Location: login.php");
-  exit;
+// Allow client or admin acting as client
+if (!$userObj->isLoggedIn() || !in_array($_SESSION['role'], ['client','fiverr_administrator'])) {
+    header("Location: login.php");
+    exit();
 }
 
-// Check if user is client based on is_client session flag
-if (!isset($_SESSION['is_client']) || $_SESSION['is_client'] != 1) {
-  // Not a client? Redirect to freelancer dashboard
-  header("Location: ../freelancer/index.php");
-  exit;
-}
 ?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,9 +28,9 @@ if (!isset($_SESSION['is_client']) || $_SESSION['is_client'] != 1) {
   <?php include 'includes/navbar.php'; ?>
   <div class="container-fluid">
     <div class="display-4 text-center">
-      Hello there and welcome! 
-      <span class="text-success"><?php echo htmlspecialchars($_SESSION['username']); ?>.</span> 
-      Double click to edit your offers and then press enter to save!
+      Hello there and welcome
+      <span class="text-success"><?php echo htmlspecialchars($_SESSION['username']); ?></span> 
+      to client panel!
     </div>
     <div class="text-center">
       <?php  
